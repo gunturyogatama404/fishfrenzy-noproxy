@@ -77,7 +77,7 @@ export async function fishing(token, type = '1', proxy) {
 
     let fish;
     ws.on('open', function open() {
-        logger(`Connected to WebSocket server using proxy: ${proxy}`);
+        logger(`Connected to WebSocket server using proxy`);
         startNewGame();
     });
 
@@ -108,5 +108,15 @@ export async function fishing(token, type = '1', proxy) {
         } catch (error) {
             logger('Failed to parse message:', 'error');
         }
+    })
+    ws.on('close', (code, reason) => {
+        logger(`WebSocket closed. Code: ${code}, Reason: ${reason}`, 'info');
+        const retryDelay = Math.random() * (10000 - 5000) + 5000; // Retry delay between 5-10 seconds
+        logger(`Reconnecting in ${(retryDelay / 1000).toFixed(2)} seconds...`, 'info');
+        setTimeout(() => fishing(token, type, proxy), retryDelay);
     });
+
+    ws.on('error', (error) => {
+        logger(`WebSocket error: ${error.message}`, 'error');
+    });;
 }
