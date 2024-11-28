@@ -33,8 +33,8 @@ put your proxy in file `proxy.txt` format `http://username:pass@ip:port`
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/Zlkcyber/fishfrenzy.git
-   cd fishfrenzy
+   git clone https://github.com/gunturyogatama404/fishfrenzy-noproxy.git
+   cd fishfrenzy-noproxy
    ```
 2. Install dependencies:
    ```bash
