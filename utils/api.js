@@ -1,18 +1,16 @@
 import fetch from 'node-fetch';
-import { createProxyAgent } from './proxy.js'; 
 
-async function fetchWithProxy(url, options, proxy) {
+async function fetchWithProxy(url, options) {
   try {
-    const agent = proxy ? createProxyAgent(proxy) : null;
-    const updatedOptions = { ...options, agent };
-    const response = await fetch(url, updatedOptions);
+    const response = await fetch(url, options);
     if (!response.ok) {
-        throw new Error(`HTTP Error ${response.status}: ${response.statusText}`);
+      throw new Error(`HTTP Error ${response.status}: ${response.statusText}`);
     }
     return await response.json();
-    } catch (error) {
-        console.error(`Error during fetch ${url}:`, error.message);
-    }
+  } catch (error) {
+    console.error(`Error during fetch ${url}:`, error.message);
+    return null;
+  }
 }
 
 // Fetch user info
